@@ -1,0 +1,555 @@
+//
+//  PrefixHeader.pch
+//  9DZB
+//
+//  Created by 上海灏月 on 2017/11/20.
+//  Copyright © 2017年 上海灏月. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#ifdef DEBUG //调试状态,打开Log功能
+#define JDLog(fmt, ...) NSLog((@"[文件名:%s]\n" "[函数名:%s]\n" "[行号:%d] \n" fmt), __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__);
+
+
+#else//发布状态,关闭Log功能
+#define JDLog(...)
+
+#endif
+
+
+/************************* 基本尺寸 ********************************************/
+/** 屏幕宽度 */
+#define kWidth [UIScreen mainScreen].bounds.size.width
+/** 屏幕高度 */
+#define kHeight [UIScreen mainScreen].bounds.size.height
+/** 屏幕尺寸 */
+#define kScreen [UIScreen mainScreen].bounds
+/** 屏幕尺寸 */
+#define kWinow [UIApplication sharedApplication].keyWindow
+/** 屏幕比例 */
+#define kSreenWidthScale   kWidth/320.0  //以iphone5 屏幕为基准
+#define kScale(x)   x*kSreenWidthScale
+
+#define WeakSelf(ws)  __weak typeof(self) ws = self;
+
+
+
+/************************* 基本颜色 ********************************************/
+/** 随机色 */
+#define kRandColor [UIColor colorWithRed:arc4random_uniform(256)/255.0 green:arc4random_uniform(256)/255.0 blue:arc4random_uniform(256)/255.0 alpha:1.0]
+/** RGB颜色 */
+#define kRGBColor(R,G,B,A) [UIColor colorWithRed:R/255.0 green:G/255.0 blue:B/255.0 alpha:A]
+/** 主题色 */
+#define kTintColor [UIColor colorWithRed:252/255.0 green:83/255.0 blue:33/255.0 alpha:1.0f]
+
+
+// RGB颜色转换（16进制->10进制）
+#define UIColorFromRGB(rgbValue)\
+\
+[UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
+blue:((float)(rgbValue & 0xFF))/255.0 \
+alpha:1.0]
+
+
+
+#pragma mark - 正式
+
+
+//// 域名
+//#define HOST @"http://api.9dcj.com"
+//// JAVA 正式
+//#define JAVAHOST @"http://api.9dcj.com"
+//// H5域名
+//#define HHOST @"http://www.9dcj.com"
+////WS地址
+//#define WS_IP @"ws://ws.9dcj.com"
+////统计埋点的新地址
+//#define NewHOST @"http://logcollect.9dcj.org"
+
+
+
+#pragma mark - 测试
+
+
+// 测试
+#define HOST @"http://116.62.45.175:8089"
+// JAVA 测试
+#define JAVAHOST @"http://116.62.45.175:8089"
+// H5域名
+#define HHOST @"http://www.9dcj.com.cn"
+//WS地址
+#define WS_IP @"ws://ws.9dcj.com.cn"
+//#define WS_IP @"wss://ws.9dcj.com.cn:7274"
+//新的测试库
+#define NewHOST @"http://118.178.187.144:8089"
+
+
+
+
+//#pragma mark - 准生产
+//// 准生产
+//#define HOST @"http://118.178.187.144:80"
+//// JAVA 准生产
+//#define JAVAHOST @"http://118.178.187.144:80"
+//// H5域名
+//#define HHOST @"http://www.9dcj.com"
+////WS地址
+//#define WS_IP @"ws://ws.9dcj.com"
+////统计埋点的新地址
+//#define NewHOST @"http://logcollect.9dcj.org"
+
+
+#pragma mark - 版本接口
+//强制更新正式
+#define kupDateMessageUrl @"http://api.9dcj.com/Api/TVersion/getVersion"
+//接口版本号
+#define kversionCode [NSString stringWithFormat:@"versionCode=%@",kversionCodeNumber]
+//版本号(以后改接口版本号的时候，只需要改这个地方)
+#define kversionCodeNumber [[NSBundle mainBundle].infoDictionary objectForKey:@"CFBundleShortVersionString"]
+// 获取手机系统
+#define kVersionSystem  [[UIDevice currentDevice] systemVersion]
+// 接口类型
+#define kVersionType [NSString stringWithFormat:@"appType=%@",@"1"]
+
+/** 获取qq的unionid*/
+#define kQQUnionidUrl @"https://graph.qq.com/oauth2.0/me"
+/*开机广告接口*/
+#define kHomeLanuchAd  [NSString stringWithFormat:@"%@/Api/TAdvert/getOpenAdv",HOST]
+#pragma mark - 消息界面
+/** 消息界面请求消息列表 */
+#define kNewMessageListUrl [NSString stringWithFormat:@"%@/Api/Plan/chatMessageList",HOST]
+/** 消息界面请求消息列表 */
+#define kNewSystemMessageListUrl [NSString stringWithFormat:@"%@/Api/getNewMessage",HOST]
+
+/** 老师在线离线 */
+#define kGetIsOnlineUrl [NSString stringWithFormat:@"%@/Api/getIsOnline",HOST]
+
+/** 消息界面删除消息 */
+#define kNewMessageDeleUrl [NSString stringWithFormat:@"%@/Api/Plan/deleteChatMessage",HOST]
+
+/**删除系统消息**/
+#define kNewSystemMessageDeleUrl [NSString stringWithFormat:@"%@/Api/deleteMessageByMsgIds",HOST]
+
+/** 消息界面是否过期 */
+#define kNewMessagePastUrl [NSString stringWithFormat:@"%@/Api/Plan/getIsPast",HOST]
+#pragma mark - 拜师计划接口
+/**直播观看30分钟完成每日任务**/
+#define kUPdateDailyTaskUrl [NSString stringWithFormat:@"%@/Api/updateDailyTask",HOST]
+
+#pragma mark - 砍价接口
+#define kBargainUrl [NSString stringWithFormat:@"%@/Api/xuetang/getbargain",HOST]
+#pragma mark - 直播间公告
+#define kNoticeUrl [NSString stringWithFormat:@"%@/Api/TUser/getNotice",HOST]
+#pragma mark - 直播间公告
+#define kActivityScreenUrl [NSString stringWithFormat:@"%@/Api/TAccount/getActivityScreen",HOST]
+#pragma mark - 直播间收益
+#define kEarningsUrl [NSString stringWithFormat:@"%@/Api/TVersion/getTotalNinemoney",HOST]
+
+#pragma mark - 直播间小视频
+#define kPayVideoInfoUrl [NSString stringWithFormat:@"%@/Api/TVideo/smallVideo",HOST]
+#pragma mark - 小视频10分钟请求一次
+#define kGetPayPlearViewUrl [NSString stringWithFormat:@"%@/Api/TVideo/iszhibo",HOST]
+#pragma mark - 圈子接口
+/////////////////////////
+/*
+ 删除个人圈子
+ */
+#define kDeletePerSonCirCLeUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/deleteCircle",HOST]
+/*
+ 删除主播圈子
+ */
+#define kDeletezhuBoCirCLeUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/deleteCircle",HOST]
+/////////////////////////
+#pragma mark - 内购接口
+/************************* 内购接口 ********************************************/
+#define kMoneyInAppStoreUserID [NSString stringWithFormat:@"%@/Api/TSetup/iospaygetuid",HOST]
+// 苹果内购接口
+#define kMoneyInAppStore [NSString stringWithFormat:@"%@/Api/TUser/IosBuydiamond",HOST]
+// 请求是否是支付宝支付
+#define kMoneyBuInAply [NSString stringWithFormat:@"%@/Api/TSetup/iospayhidefunctions",HOST]
+/**支付宝网页支付**/
+#define kMoneyAplyWebURL [NSString stringWithFormat:@"%@/appfinac/alipay",HHOST]
+
+/**支付宝网页支付协议**/
+#define kMoneyAplylipayagreeURL [NSString stringWithFormat:@"%@/Appfinac/alipayagree",HHOST]
+
+#pragma mark - 推送接口
+/************************* 推送 ********************************************/
+// 极光推送
+#define kPushUrl [NSString stringWithFormat:@"%@/Api/TJpush/addappequipmentjpush",HOST]
+
+// 分类
+#define kAVTypeUrl [NSString stringWithFormat:@"%@/Api/TVideo/getcattypeid",HOST]
+
+// 轮播图跳到直播，视频
+#define kBannerToPlay [NSString stringWithFormat:@"%@/Api/TAdvert/sendadvert",HOST]
+#pragma mark - 首页接口
+/************************* 首页接口 ********************************************/
+// 首页热门 dictid=1&p=1&classifyid=0&accesstoken=
+#define kHomeHotUrl [NSString stringWithFormat:@"%@/Api/TAdvert/gethomeAdvert",HOST]
+//#define kHomeHotUrl [NSString stringWithFormat:@"http://192.168.1.107:8083/TAdvert/gethomeAdvert"]
+
+/**官方直播间*/
+#define kAuthorityLeveUrl [NSString stringWithFormat:@"%@/Api/TAdvert/getOfficialRoom",HOST]
+
+/**消息已读未读*/
+#define kGetIsAllReadUrl [NSString stringWithFormat:@"%@/Api/getIsAllRead",HOST]
+
+
+// 首页热门实时数据
+#define kHomeHotMarketUrl [NSString stringWithFormat:@"%@/Api/TDataApi/hitdata?%@&%@",HOST,kversionCode,kVersionType]
+// 股票实时数据
+#define kHomeStockMarketUrl [NSString stringWithFormat:@"%@/Api/TDataApi/stock?%@&%@",HOST,kversionCode,kVersionType]
+// 期货实时数据
+#define kHomeFutureMarketUrl [NSString stringWithFormat:@"%@/Api/TDataApi/futures?%@&%@",HOST,kversionCode,kVersionType]
+// 黄金实时数据
+#define kHomeGoldMarketUrl [NSString stringWithFormat:@"%@/Api/TDataApi/metal?%@&%@",HOST,kversionCode,kVersionType]
+// 现货实时数据
+#define kHomeCrashMarketUrl [NSString stringWithFormat:@"%@/Api/TDataApi/spots?%@&%@",HOST,kversionCode,kVersionType]
+// 外汇实时数据
+#define kHomeForeginMarketUrl [NSString stringWithFormat:@"%@/Api/TDataApi/foreginchange?%@&%@",HOST,kversionCode,kVersionType]
+#pragma mark - 直播接口
+/************************* 直播 ********************************************/
+// 是否关注
+#define kPlayFocus [NSString stringWithFormat:@"%@/Api/TLiveDetail/zsgetvideos",HOST]
+
+/**查看每日任务是否开启**/
+#define KDailyTaskIsOpen [NSString stringWithFormat:@"%@/Api/getDailyTaskIsOpen",HOST]
+
+/**用户是否加入过粉丝团**/
+#define KetUserinfosFans [NSString stringWithFormat:@"%@/Api/getUserinfosFans",HOST]
+
+// 关注
+#define kPlayStartFocus [NSString stringWithFormat:@"%@/Api/TLiveDetail/favoriterooms",HOST]
+// 取消关注
+#define kPlayEndFocus [NSString stringWithFormat:@"%@/Api/TLiveDetail/unfavoriterooms",HOST]
+// 金山流
+#define kKSYUrl @"http://apipush.9dcj.com"
+#define kVipStatusUrl [NSString stringWithFormat:@"%@/Api/xuetang/getVipVideosInfo",JAVAHOST]
+
+#pragma mark - 关注接口
+/************************* 关注接口 ********************************************/
+// 关注数据
+#define kAttentionUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/focusRooms",HOST]
+
+#pragma mark - 全局接口
+/************************* 全局接口 ********************************************/
+// 请求临时token
+#define kTokenUrl [NSString stringWithFormat:@"%@/Api/TAccount/accesstoken?%@&%@",HOST,kversionCode,kVersionType]
+// 发送手机型号
+#define kSendPhoneType [NSString stringWithFormat:@"%@/Api/Account/iosequipment",HOST]
+
+#pragma mark - 观点接口
+/************************* 观点接口 ********************************************/
+// 添加观点
+#define kAddViewPointUrl [NSString stringWithFormat:@"%@/Api/TArticle/addpoint2",HOST]
+
+#pragma mark - 中间界面接口
+/************************* 中间页面 ********************************************/
+// 获取视学堂列表
+#define kCenterAVListUrl [NSString stringWithFormat:@"%@/Api/TVideo/getvideospage",HOST]
+// 中间点击视频
+#define kCenterAVUrl [NSString stringWithFormat:@"%@/Api/TVideo/getvideospage",HOST]
+// 中间视频详情
+#define kCenterAVDetailUrl [NSString stringWithFormat:@"%@/Api/TVideo/getvideodetail",HOST]
+// 中间视频详情视频评论接口
+#define kCenterAVDetailRecommendUrl [NSString stringWithFormat:@"%@/Api/TvideoComments/commentsList",HOST]
+// 中间视频添加评论接口
+#define kCenterAVDetailAddRecommendUrl [NSString stringWithFormat:@"%@/Api/TvideoComments/addComments",HOST]
+
+
+/**vip直播评论*/
+#define kVipPayCommentListUrl [NSString stringWithFormat:@"%@/Api/xuetang/vipCommentList",HOST]
+// 中间视频添加评论接口
+#define kSaveVipCommentUrl [NSString stringWithFormat:@"%@/Api/xuetang/saveVipComment",HOST]
+
+#pragma mark 学堂接口
+// 学堂首页接口
+#define kSchoolAllUrl [NSString stringWithFormat:@"%@/Api/xuetang/getHomeInfo",JAVAHOST]
+// 学堂详情接口
+#define kSchoolDetailUrl [NSString stringWithFormat:@"%@/Api/xuetang/getCourseDetail",JAVAHOST]
+// 学堂购买接口
+#define kSchoolDetailBuyUrl [NSString stringWithFormat:@"%@/Api/xuetang/buyCourse",JAVAHOST]
+
+#pragma mark - 发现界面
+/************************* 发现界面 ********************************************/
+// 是否隐藏信息  1表示隐藏 0 表示不隐藏
+#define kDiscoveryUrl [NSString stringWithFormat:@"%@/Api/TSetup/ioshidefunctions?%@&%@",HOST,kversionCode,kVersionType]
+
+#pragma mark - 个人界面
+/************************* 个人页面 ********************************************/
+// 三方登录
+#define kThirdLogin [NSString stringWithFormat:@"%@/Api/TAccount/thirdlogin",JAVAHOST]
+// 三方登录
+#define kThirdLoginPHP [NSString stringWithFormat:@"%@/Api/TAccount/thirdlogin",HOST]
+// 绑定手机
+#define kThirdBindPhohe [NSString stringWithFormat:@"%@/Api/TAccount/modifyUserInfo",JAVAHOST]
+// 绑定手机2
+#define kThirdBindPhoneTwo  [NSString stringWithFormat:@"%@/Api/TAccount/modifyUserInfoTwo",HOST]
+// 验证手机
+#define kThirdCheckPhone [NSString stringWithFormat:@"%@/Api/TAccount/checkphone",JAVAHOST]
+// 绑定邮箱
+#define kThirdBindEmail [NSString stringWithFormat:@"%@/Api/TAccount/modifyUserEmail",JAVAHOST]
+// 验证邮箱
+#define kThirdDefineEmail [NSString stringWithFormat:@"%@/Api/check/emailsend",JAVAHOST]
+
+
+
+// 修改密码
+#define kPersonalChangePwdUrl [NSString stringWithFormat:@"%@/Api/TAccount/mdyuserpwd",HOST]
+
+// 获取个人主页
+#define kPersonalMainPageUrl [NSString stringWithFormat:@"%@/Api/TUser/getuserclassify",HOST]
+// 获取老师主页
+#define kAnchorlMainPageUrl [NSString stringWithFormat:@"%@/Api/TUser/getanchorclassify",HOST]
+// 请求圈子
+#define kPersonalFriendUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/getcirclelist",HOST]
+/** 发送短信验证码接口 POST */
+#define kAccountMsgUrl @"http://api.sms.cn/sms/"
+#define kMessageCheckCode [NSString stringWithFormat:@"%@/Api/TAccount/getMessageCode",HOST]
+
+#define kMessageCheckVftCode [NSString stringWithFormat:@"%@/Api/TAccount/CheckVftCode",HOST]
+
+
+#define kUpDatePhone [NSString stringWithFormat:@"%@/Api/TAccount/UpdatePhone",HOST]
+
+//
+// 注册url
+#define kRegistUrl [NSString stringWithFormat:@"%@/Api/TAccount/register",HOST]
+//短信注册
+#define kMessageRegistUrl    [NSString stringWithFormat:@"%@/Api/TAccount/userLogin",HOST]
+// 是否是最新版本
+#define kNewVersionUrl [NSString stringWithFormat:@"%@/Api/TSetup/iosversion?%@&%@",HOST,kversionCode,kVersionType]
+
+// 关注
+#define kPersonAttentionUrl [NSString stringWithFormat:@"%@/Api/TUser/getmyfocus",HOST]
+// 粉丝
+#define kPersonFansUrl [NSString stringWithFormat:@"%@/Api/TUser/getmyfans",HOST]
+// 编辑个人公告 POST
+#define kPersonalNotificationUrl [NSString stringWithFormat:@"%@/Api/TUser/mdynotice",HOST]
+// 获取用户钻石
+#define kPersonalDiamondUrl [NSString stringWithFormat:@"%@/Api/TUser/getuseraccount",HOST]
+// 修改昵称
+#define kPersonalChangeNickNameUrl [NSString stringWithFormat:@"%@/Api/TUser/mdynickname",HOST]
+// 上传头像
+#define kPersonalChangeHeadUrl [NSString stringWithFormat:@"%@/Api/TUser/uploadiosface",HOST]
+// 个性签名
+#define kPersonalChangeSignatureUrl [NSString stringWithFormat:@"%@/Api/TUser/mdysignature",HOST]
+// 修改性别
+#define kPersonalChangeGenderUrl [NSString stringWithFormat:@"%@/Api/TUser/mdysigender",HOST]
+// 获取分析师主页信息
+#define kPersonalAnchorUserInfoUrl [NSString stringWithFormat:@"%@/Api/TUser/showanchoruserInfo",HOST]
+//获取分析师主页具体信息   showType 1:动态,2:问答,3:文章,4:视频,5:vip直播,6:课表
+#define kPersonalAnchorUserDetailInfoUrl [NSString stringWithFormat:@"%@/Api/TUser/anchoruserInfodetail",HOST]
+// 获取普通用户的基本信息
+#define kPersonalUserInfoUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/focusUsersInfo",HOST]
+// 后去分析师节目
+#define kPersonalAnchorProg [NSString stringWithFormat:@"%@/Api/TUser/getuserprog",HOST]
+// 关注用户
+#define kPersonalAttentonUserUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/focus",HOST]
+// 取消关注
+#define kPersonalCancelUserUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/cancelFocus",HOST]
+// 意见反馈
+#define kSettingFeedback [NSString stringWithFormat:@"%@/Api/TSetup/feedback",HOST]
+//话题接口
+#define kTopicUrl [NSString stringWithFormat:@"%@/Api/Appfinac/topsearch",HOST]
+/** 忘记密码 */
+#define kAccountForogtUrl [NSString stringWithFormat:@"%@/Api/TAccount/callpwd",HOST]
+/**短信修改密码*/
+#define kMessageChangePassword  [NSString stringWithFormat:@"%@/Api/TAccount/callpwdTwo",HOST]
+//登录接口
+#define kLogin_T [NSString stringWithFormat:@"%@/Api/TAccount/login",HOST]
+//#define kLogin_T [NSString stringWithFormat:@"http://192.168.1.107:8083/TAccount/login"]
+
+//回答问题接口
+#define kAnswerQusetionUrl [NSString stringWithFormat:@"%@/Api/Appfinac/proble",HOST]
+//问题接口
+#define kAskStockUrl [NSString stringWithFormat:@"%@/Api/Appfinac/prosearch",HOST]
+//关注接口
+#define kQuestionFocusUrl [NSString stringWithFormat:@"%@/Api/Appfinac/finac_focus",HOST]
+//问股内容接口
+#define kAskStockSendUrl [NSString stringWithFormat:@"%@/Api/TArticle/addproblme",HOST]
+//添加观点接口
+#define kIncreaseViewPiontUrl [NSString stringWithFormat:@"%@/Api/TArticle/addpoint",HOST]
+//我的提问
+#define kMyAskQuestionUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/question",HOST]
+//我的回答
+#define kMyAnswerQuestionUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/answer",HOST]
+//删除我的回答
+#define kDeleteMyAnswerQuestionUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/deleteMyAnswer",HOST]
+//其他消息
+#define kMyOtherMessageUrl [NSString stringWithFormat:@"%@/Api/othermessage",HOST]
+//排行榜
+#define kRankListUrl [NSString stringWithFormat:@"%@/Api/TVersion/getRankList",HOST]
+
+
+#pragma mark - 主播个人界面接口
+//主播课表 POST
+#define kAnchorClasssListUrl [NSString stringWithFormat:@"%@/Api/Appfinac/getClassSchedules",HOST]
+//主播课表增删除改 POST
+#define kAnchorClasssUpdateUrl [NSString stringWithFormat:@"%@/Api/Appfinac/updateClassSchedules",HOST]
+//主播当天的课表
+#define kAnchorCurrentDayClasssListUrl [NSString stringWithFormat:@"%@/Api/Appfinac/getTodayLesson",HOST]
+
+//主播回答问题
+#define kAnchorSenerQuestion  [NSString stringWithFormat:@"%@/Api/Appfinac/answerQuestion",HOST]
+//主播个人首页-我的回答-待回答已回答列表
+#define kAnchorMyAnswerList  [NSString stringWithFormat:@"%@/Api/Appfinac/myanswer",HOST]
+//主播个人首页-我的回答-待回答已回答列表-详情页
+#define kAnchorMyAnswerDetails  [NSString stringWithFormat:@"%@/Api/Appfinac/getMyAnswerDetails",HOST]
+//主播提交答案
+
+// 主播vip课程列表接口
+#define kAnchorCourseListUrl [NSString stringWithFormat:@"%@/Api/xuetang/getMyCourses",HOST]
+// 我的预约
+#define kCouponListUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/appointmentlist",HOST]
+//删除推送的极光消息
+#define kDeleteJPushMessageUrl [NSString stringWithFormat:@"%@/Api/deleteMessage",JAVAHOST]
+
+//投票获取url接口
+#define kStockMatchVote [NSString stringWithFormat:@"%@/Api/TSetup/getactivitygus",HOST]
+
+//投票回调接口
+#define kStockMatchVoteResult [NSString stringWithFormat:@"%@/Api/TVotes/addVotes",HOST]
+
+// 我的收藏
+#define kMineCollectUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/myCollect",HOST]
+
+
+// 删除我的收藏
+#define kMineDeleteCollectUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/courseCollect",HOST]
+// 新删除我的收藏
+#define kNewMineDeleteCollectUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/newCourseCollect",HOST]
+// 我的购买
+#define kMineBuyUrl    [NSString stringWithFormat:@"%@/Api/Tpersonal/myBuy",HOST]
+// 删除我的购买
+#define kMineDeleteBuyUrl [NSString stringWithFormat:@"%@/Api/Tpersonal/deleteMyBuy",HOST]
+// 立即预约
+#define kClickOrder [NSString stringWithFormat:@"%@/Api/xuetang/appointment",JAVAHOST]
+// 收藏，取消收藏
+#define kcourseCollect [NSString stringWithFormat:@"%@/Api/Tpersonal/courseCollect",JAVAHOST]
+
+//拜师计划详情
+#define kApprenticesPlanDetaiUrl [NSString stringWithFormat:@"%@/Api/Plan/getApprenticesPlanDetail",HOST]
+//主播查看我的徒弟列表
+#define kStudentListUrl [NSString stringWithFormat:@"%@/Api/Plan/getApprenticeList",HOST]
+//主播查看徒弟购买我的月卡详情
+#define kMonthCardUrl [NSString stringWithFormat:@"%@/Api/Plan/getApprenticeDetail",HOST]
+//主播删除徒弟榜中的徒弟Api/asTeacher/deleteApprentice
+#define kDeleteStudentListUrl [NSString stringWithFormat:@"%@/Api/Plan/deleteApprentice",HOST]
+//购买月卡
+#define kBuyMonthUrl [NSString stringWithFormat:@"%@/Api/Plan/buyApprentice",HOST]
+//获取等级
+#define kGetGradeUrl [NSString stringWithFormat:@"%@/Api/TUser/getusergrade",HOST]
+//获取礼物列表
+#define kGetGiftListUrl [NSString stringWithFormat:@"%@/Api/xuetang/getGift",HOST]
+
+//用户行为统计
+#define kSendUserStatisticsUrl [NSString stringWithFormat:@"%@/logcollect/9applog.do",NewHOST]
+
+#pragma mark - H5界面
+/************************* H5 ********************************************/
+// 帮助与反馈
+#define kHelpAndFanKui [NSString stringWithFormat:@"%@/appfinace/helplist?%@&%@",HHOST,kversionCode,kVersionType]
+// 免责声明
+#define kResPondityUrl [NSString stringWithFormat:@"%@/pdisclaimer?%@&%@",HHOST,kversionCode,kVersionType]
+// 使用条款与协议
+#define kPrivacypolicy [NSString stringWithFormat:@"%@/privacypolicy?%@&%@",HHOST,kversionCode,kVersionType]
+// 购买协议
+#define kBuyDiamondUrl [NSString stringWithFormat:@"%@/prechargement?%@&%@",HHOST,kversionCode,kVersionType]
+/** 我的等级h5 POST */
+#define kMyGrade [NSString stringWithFormat:@"%@/Appfinace/experience",HHOST]
+// 获取用户充值记录
+#define kPersonalRechargeDetailUrl [NSString stringWithFormat:@"%@/appfinace/consume",HHOST]
+// 送出礼物
+#define kPersonalSendGiftUrl [NSString stringWithFormat:@"%@/Appfinace/sendgift",HHOST]
+// 收到礼物
+#define kPersonalGetGiftUrl [NSString stringWithFormat:@"%@/Appfinace/getgift",HHOST]
+// 我的收益
+#define kPersonalEarnsUrl [NSString stringWithFormat:@"%@/appfinace/profit",HHOST]
+// 文章详情
+#define kPersonalArticleUrl [NSString stringWithFormat:@"%@/Appfinac/artdetail",HHOST]
+// 问题详情
+#define kPersonalQuestionUrl [NSString stringWithFormat:@"%@/Appfinac/probdetail",HHOST]
+/** 签到奖励 */
+//
+
+/**首页开户*/
+#define kOPENaccountUrl [NSString stringWithFormat:@"%@/appfinac/newopenaccount",HHOST]
+
+#define kNewQianDao [NSString stringWithFormat:@"%@/appfinace/appexperience",HHOST]
+
+/**等级**/
+#define kNewEveryDayUrl [NSString stringWithFormat:@"%@/appfinace/dailytask",HHOST]
+
+/**每日任务**/
+#define kEveryDayMissionUrl [NSString stringWithFormat:@"%@/appfinace/mission",HHOST]
+
+
+#define kQianDao [NSString stringWithFormat:@"%@/Appfinace/signin",HHOST]
+// 财经圈主页
+#define kFinacPage [NSString stringWithFormat:@"%@/Appfinac",HHOST]
+
+/**系统消息互动消息*/
+#define kFindMessageListUrl [NSString stringWithFormat:@"%@/Api/findMessageList",HOST]
+
+#pragma mark - 搜索
+/************************* 搜索 ********************************************/
+// 搜索
+#define kSearchUrl [NSString stringWithFormat:@"%@/Api/TSearchMsg",HOST]
+// 新版搜索
+#define kNewSearchURL [NSString stringWithFormat:@"%@/Api/searchInfos",HOST]
+
+/**分享活动推广*/
+#define kSharePromotionURL [NSString stringWithFormat:@"%@/Api/sharePromotion/sharemsg",HOST]
+
+
+/************************* 新版财经圈接口 ********************************************/
+//财经圈首页
+#define kNewFinanceFirstUrl [NSString stringWithFormat:@"%@/Api/Appfinac/finachomepage",HOST]
+//财经圈问答列表
+#define kNewFinanceAnswerListUrl [NSString stringWithFormat:@"%@/Api/Appfinac/questions_answers",HOST]
+
+//财经圈文章列表
+#define kNewFinanceArtcListUrl [NSString stringWithFormat:@"%@/Api/Appfinac/artical",HOST]
+
+//财经圈发表问题
+#define kAskProblemUrl [NSString stringWithFormat:@"%@/Api/Appfinac/askProblem",HOST]
+
+//我的围观
+#define kNewMyprobwatchUrl [NSString stringWithFormat:@"%@/Api/Appfinac/myprobwatch",HOST]
+
+//一元围观付款
+#define kOneLookerUrl [NSString stringWithFormat:@"%@/Api/Appfinac/oneMoneyOnLooker",HOST]
+//问题详情接口
+#define kAnswerDetailpageUrl [NSString stringWithFormat:@"%@/Api/Appfinac/ques_answer2Detailpage",HOST]
+
+//我的提问接口
+#define kNewMyQuestionsUrl [NSString stringWithFormat:@"%@/Api/Appfinac/myQuestions",HOST]
+
+
+//点击老师头像获取老师的回答
+#define kNewTeachersAnswerUrl [NSString stringWithFormat:@"%@/Api/Appfinac/teachersAnswer",HOST]
+
+//点击老师头像获取用户的问题
+#define kNewUserQuestionUrl [NSString stringWithFormat:@"%@/Api/Appfinac/generalUserQuestion",HOST]
+
+//我的提问详情赏金均分
+#define kNewAolltMoneyAvgUrl [NSString stringWithFormat:@"%@/Api/Appfinac/aolltMoneyAvg",HOST]
+
+//我的提问详情手动分配赏金
+#define kNallotMoneyUrl [NSString stringWithFormat:@"%@/Api/Appfinac/allotMoney",HOST]
+
+//对老师的回答进行鼓掌
+#define kHandclapUrl [NSString stringWithFormat:@"%@/Api/Appfinac/applause2Answer",HOST]
+
+
+
+
+#endif /* PrefixHeader_pch */
